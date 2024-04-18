@@ -10,6 +10,10 @@ const {find,
 
 server.use(express.json())
 
+server.get('/', (req, res) => {
+    res.send('connected to root!')
+})
+
 // get all users
 server.get('/api/users', async (req, res) => {
     const users = await find()
