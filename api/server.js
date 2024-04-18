@@ -46,6 +46,33 @@ server.post('/api/users', async (req, res) => {
     }
 })
 
+// put on existing user
+server.put('/api/users/:id', async (req, res) => {
+    try {
+        const user = await update(req.params.id, req.body)
+        if (user) {
+            res.status(200).json(user)
+        } else {
+            res.status(404).json({message: `User with id: ${req.params.id} not found`})
+        }
+    } catch (err) {
+        res.status(500).json({message: `Error on server: ${err.message}`})
+    }
+})
+
+// delete a user 
+server.delete('/api/users/:id', async (req, res) => {
+    try {
+        const deleteUser = await remove(req.params.id);
+		if (deleteUser) {
+			res.status(200).json(deleteUser);
+		} else {
+			res.status(404).json({ message: `User with id: ${req.params.id} not found` });
+				}
+    } catch (err) {
+        res.status(500).json({ message: `Error on server: ${err.message}` });
+    }
+})
 
 
 module.exports = server; // EXPORT YOUR SERVER instead of {}
